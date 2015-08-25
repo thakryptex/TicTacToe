@@ -4,7 +4,7 @@ import java.util.Random;
 public class PlayerAI extends Player {
 
     private Random random = new Random();
-    private int tactic = 0;
+//    private int tactic = 0;
     private Game game;
 
     public PlayerAI(Game game) {
@@ -16,9 +16,9 @@ public class PlayerAI extends Player {
         Point point = new Point();
         Cell[][] grid = game.getField().getCells();
 
-        if (tactic == 0) {
-            point = firstMove(grid);
-            return point;
+        // первый ход компьютера
+        if (Game.numOfSteps == 1 || Game.numOfSteps == 2) {
+            return firstMove(grid);
         }
 
         point.x = random.nextInt(3);
@@ -27,22 +27,22 @@ public class PlayerAI extends Player {
         return point;
     }
 
+
     private Point firstMove(Cell [][] grid) {
         Point point = new Point();
 
-        if(Game.numOfSteps % 2 == 1) {
-
-        }
-
-        if (grid[1][1] == Cell.X) {
+        // Если компьютер ходит первым, то ставит в один из углов.
+        // Если игрок поставил крест в центр, то также в угол.
+        if (grid[1][1] == Cell.X || Game.numOfSteps % 2 == 1) {
             int x = random.nextInt(2)*2;
             int y = random.nextInt(2)*2;
             point.x = x;
             point.y = y;
-            tactic = 1;
+//            tactic = 1;
             return point;
         }
 
+        // Если игрок поставил крест в один из углов
         for (int i = 0; i < 3; i+=2) {
             for (int j = 0; j < 3; j+=2) {
                 if (grid[i][j] == Cell.X) {
@@ -56,19 +56,20 @@ public class PlayerAI extends Player {
                             point.y = j;
                             break;
                     }
-                    tactic = 2;
+//                    tactic = 2;
                     return point;
                 }
             }
         }
 
+        // Если игрок поставил крест в одну из боковых
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (i != j) {
                     if (grid[i][j] == Cell.X) {
                         point.x = 1;
                         point.y = 1;
-                        tactic = 3;
+//                        tactic = 3;
                         return point;
                     }
                 }

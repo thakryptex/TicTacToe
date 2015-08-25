@@ -33,12 +33,15 @@ public class GUI extends JFrame {
                 super.mouseClicked(e);
                 if (!game.isGamePlaying()) return;
                 int x = e.getX() - 10;
-                int y = e.getY() - 10;
+                int y = e.getY() - 36;
+                // проверка, что X и Y нажатия находятся в рамках игрового поля
                 if (x > 0 && y > 0 && y < 300 && x < 300) {
                     int i, j;
                     i = y / 100;
                     j = x / 100;
+                    // если нажатие одобрено и клетка изменилась, то записывается point и даётся сигнал второму thread, что другой игрок делает шаг
                     if (game.updateCell(j, i)) {
+                        Game.prevStep = new Point(j, i);
                         point = new Point(j, i);
                         repaint();
                     }

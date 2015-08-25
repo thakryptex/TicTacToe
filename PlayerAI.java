@@ -34,7 +34,7 @@ public class PlayerAI extends Player {
 
         }
 
-        if (grid[1][1].getCellState() == Cell.CellState.X) {
+        if (grid[1][1] == Cell.X) {
             int x = random.nextInt(2)*2;
             int y = random.nextInt(2)*2;
             point.x = x;
@@ -45,7 +45,7 @@ public class PlayerAI extends Player {
 
         for (int i = 0; i < 3; i+=2) {
             for (int j = 0; j < 3; j+=2) {
-                if (grid[i][j].getCellState() == Cell.CellState.X) {
+                if (grid[i][j] == Cell.X) {
                     switch (random.nextInt(2)) {
                         case 0:
                             point.x = j;
@@ -65,7 +65,7 @@ public class PlayerAI extends Player {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (i != j) {
-                    if (grid[i][j].getCellState() == Cell.CellState.X) {
+                    if (grid[i][j] == Cell.X) {
                         point.x = 1;
                         point.y = 1;
                         tactic = 3;

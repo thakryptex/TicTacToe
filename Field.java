@@ -6,20 +6,20 @@ public class Field {
     public Field() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                cells[i][j] = new Cell();
+                cells[i][j] = Cell.EMPTY;
             }
         }
     }
 
     public boolean updateCell(int x, int y, int playersTurn) {
         Cell cell = cells[y][x];
-        if (cell.getCellState() == Cell.CellState.X || cell.getCellState() == Cell.CellState.O) {
+        if (cell == Cell.X || cell == Cell.O) {
             return false;
         }
         if (playersTurn == 0) {
-            cells[y][x].setCellState(Cell.CellState.X);
+            cells[y][x] = Cell.X;
         } else {
-            cells[y][x].setCellState(Cell.CellState.O);
+            cells[y][x] = Cell.O;
         }
         return true;
     }

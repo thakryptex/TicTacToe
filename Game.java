@@ -80,40 +80,40 @@ public class Game implements Runnable {
         boolean find = false;
         Cell[][] grid = field.getCells();
         for (int i = 0; i < 3; i++) {
-            if (grid[i][0].getCellState() == Cell.CellState.X && grid[i][1].getCellState() == Cell.CellState.X && grid[i][2].getCellState() == Cell.CellState.X) {
+            if (grid[i][0] == Cell.X && grid[i][1] == Cell.X && grid[i][2] == Cell.X) {
                 find = true; winner = "Crosses";
             }
-            if (grid[i][0].getCellState() == Cell.CellState.O && grid[i][1].getCellState() == Cell.CellState.O && grid[i][2].getCellState() == Cell.CellState.O) {
+            if (grid[i][0] == Cell.O && grid[i][1] == Cell.O && grid[i][2] == Cell.O) {
                 find = true; winner = "Noughts";
             }
 
-            if (grid[0][i].getCellState() == Cell.CellState.X && grid[1][i].getCellState() == Cell.CellState.X && grid[2][i].getCellState() == Cell.CellState.X) {
+            if (grid[0][i] == Cell.X && grid[1][i] == Cell.X && grid[2][i] == Cell.X) {
                 find = true; winner = "Crosses";
             }
-            if (grid[0][i].getCellState() == Cell.CellState.O && grid[1][i].getCellState() == Cell.CellState.O && grid[2][i].getCellState() == Cell.CellState.O) {
+            if (grid[0][i] == Cell.O && grid[1][i] == Cell.O && grid[2][i] == Cell.O) {
                 find = true; winner = "Noughts";
             }
         }
 
-        if (grid[0][0].getCellState() == Cell.CellState.X && grid[1][1].getCellState() == Cell.CellState.X && grid[2][2].getCellState() == Cell.CellState.X) {
+        if (grid[0][0] == Cell.X && grid[1][1] == Cell.X && grid[2][2] == Cell.X) {
             find = true; winner = "Crosses";
         }
-        if (grid[0][0].getCellState() == Cell.CellState.O && grid[1][1].getCellState() == Cell.CellState.O && grid[2][2].getCellState() == Cell.CellState.O) {
+        if (grid[0][0] == Cell.O && grid[1][1] == Cell.O && grid[2][2] == Cell.O) {
             find = true; winner = "Noughts";
         }
 
-        if (grid[0][2].getCellState() == Cell.CellState.X && grid[1][1].getCellState() == Cell.CellState.X && grid[2][0].getCellState() == Cell.CellState.X) {
+        if (grid[0][2] == Cell.X && grid[1][1] == Cell.X && grid[2][0] == Cell.X) {
             find = true; winner = "Crosses";
         }
-        if (grid[0][2].getCellState() == Cell.CellState.O && grid[1][1].getCellState() == Cell.CellState.O && grid[2][0].getCellState() == Cell.CellState.O) {
+        if (grid[0][2] == Cell.O && grid[1][1] == Cell.O && grid[2][0] == Cell.O) {
             find = true; winner = "Noughts";
         }
 
         return find;
     }
 
-    public Cell.CellState getCellState(int x, int y) {
-        return field.getCell(x, y).getCellState();
+    public Cell getCellState(int x, int y) {
+        return field.getCell(x, y);
     }
 
     @Override

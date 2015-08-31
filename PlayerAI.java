@@ -65,7 +65,7 @@ public class PlayerAI extends Player {
                             if (grid[i][j] == Cell.O) {
                                 x = (j == 0 ? 2 : 0);
                                 y = (i == 0 ? 2 : 0);
-                                return new Point(x, y); //TODO после этого прописать только ход в другой угол
+                                return new Point(x, y);
                             }
                         }
                     }

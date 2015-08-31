@@ -15,7 +15,6 @@ public class GUI extends JFrame {
         this.game = game;
         this.game.setGui(this);
 
-        //TODO message dialog
         int choice = JOptionPane.showOptionDialog(getContentPane(), "Who will be first", "Start of the Game", JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, new String[]{"Player", "Computer"}, "Player");
 

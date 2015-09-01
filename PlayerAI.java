@@ -43,7 +43,6 @@ public class PlayerAI extends Player {
             return result;
         }
 
-
         point.x = random.nextInt(3);
         point.y = random.nextInt(3);
 
@@ -91,10 +90,7 @@ public class PlayerAI extends Player {
                 // если человек ходит в угол
                 if (x == 0 || x == 2) {
                     x = (x == 0 ? 2 : 0);
-                    y = (x == 0 ? 2 : 0);
-                    if (grid[y][x] == Cell.O) {
-                        x = (x == 0 ? 2 : 0);
-                    }
+                    y = (y == 0 ? 2 : 0);
                 }
                 return new Point(x, y);
             }
@@ -112,11 +108,10 @@ public class PlayerAI extends Player {
             }
 
             if (tactic == 2) { // если первый ход игрока был в угол
-                if (x == 1 && y == 1) {
-                    int i = (int) Game.prevAI.getY();
-                    int j = (int) Game.prevAI.getX();
-                    j = (j == 0 ? 2 : 0);
-                    return new Point(j, i);
+                int i = (y == 0 ? 2 : 0);
+                int j = (x == 0 ? 2 : 0);
+                if (grid[i][j] == Cell.X) {
+                    return new Point(1, y);
                 }
             }
 
@@ -130,8 +125,22 @@ public class PlayerAI extends Player {
                     if (grid[0][1] == Cell.X) return new Point(x, 0);
                     if (grid[2][1] == Cell.X) return new Point(x, 2);
                 }
-            }
 
+                // если второй ход игрока был в угол противоположной стороны относительно первого хода
+                if ((x == 0 || x == 2) && (y == 0 || y == 2)) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            if (i != j && !((i == 2 || i == 0) && (j == 2 || j == 0))) {
+                                if (grid[i][j] == Cell.X) {
+                                    if (Math.abs(y - i) == 2) {
+                                        return new Point(x, i);
+                                    } else return new Point(j, y);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         if (Game.numOfSteps == 5 || Game.numOfSteps == 6) {
@@ -154,10 +163,7 @@ public class PlayerAI extends Player {
 
             //tactic = 2 - следующие шаги прописывать вроде тоже  не нужно
 
-            if (tactic == 3) { // если первый шаг игрока был в бок
-
-            }
-
+            //tactic = 3 - следующие шаги прописывать вроде тоже  не нужно
         }
         return null;
     }
@@ -290,21 +296,17 @@ public class PlayerAI extends Player {
         }
 
         // Если игрок поставил крест в один из углов
-        for (int i = 0; i < 3; i+=2) {
-            for (int j = 0; j < 3; j+=2) {
-                if (grid[i][j] == Cell.X) {
-                    x = (j == 0 ? 2 : 0);
-                    y = (i == 0 ? 2 : 0);
-                    tactic = 2;
-                    return new Point(x, y);
-                }
-            }
+        x = (int) Game.prevHuman.getX();
+        y = (int) Game.prevHuman.getY();
+        if ((x == 0 || x == 2) && (y == 0 || y == 2)) {
+            tactic = 2;
+            return new Point(1, 1);
         }
 
         // Если игрок поставил крест в одну из боковых
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (i != j) {
+                if (i != j && !((i == 2 || i == 0) && (j == 2 || j == 0))) {
                     if (grid[i][j] == Cell.X) {
                         tactic = 3;
                         return new Point(1, 1);

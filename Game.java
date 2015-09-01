@@ -4,7 +4,8 @@ import java.awt.*;
 public class Game implements Runnable {
 
     public static int numOfSteps; // общее количество совершенных шагов в игре
-    public static Point prevStep; // предыдущий шаг - здесь хранятся значения последнего шага человека
+    public static Point prevHuman; // предыдущий шаг - здесь хранятся значения последнего шага человека
+    public static Point prevAI; // предыдущий шаг - здесь хранятся значения последнего шага машины
 
     private boolean gamePlaying;
     private int playersTurn;
@@ -50,7 +51,10 @@ public class Game implements Runnable {
                 while (true) {
                     point = player2.move();
                     boolean res = updateCell(point.x, point.y);
-                    if (res) break;
+                    if (res) {
+                        prevAI = point;
+                        break;
+                    }
                 }
                 gui.repaint();
                 point = null;

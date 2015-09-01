@@ -40,7 +40,7 @@ public class GUI extends JFrame {
                     j = x / 100;
                     // если нажатие одобрено и клетка изменилась, то записывается point и даётся сигнал второму thread, что другой игрок делает шаг
                     if (game.updateCell(j, i)) {
-                        Game.prevStep = new Point(j, i);
+                        Game.prevHuman = new Point(j, i);
                         point = new Point(j, i);
                         repaint();
                     }

@@ -53,11 +53,10 @@ public class PlayerAI extends Player {
     private Point tacticMove() {
         int x, y;
         if (Game.numOfSteps == 3 || Game.numOfSteps == 4) {
+            x = (int) Game.prevHuman.getX();
+            y = (int) Game.prevHuman.getY();
 
-            if (tactic == 0) {
-                x = (int) Game.prevStep.getX();
-                y = (int) Game.prevStep.getY();
-
+            if (tactic == 0) { // когда компьютер ходит первым
                 // если предыдущий ход Human был в центр
                 if (x == 1 && y == 1) {
                     for (int i = 0; i < 3; i+=2) {
@@ -71,17 +70,44 @@ public class PlayerAI extends Player {
                     }
                 }
 
+                // если человек ходит в бок
+                if (x == 1) {
+                    y = (y == 0 ? 2 : 0);
+                    x = (int) Game.prevAI.getX();
+                    if (grid[y][x] == Cell.O) {
+                        x = (x == 0 ? 2 : 0);
+                    }
+                    return new Point(x, y);
+                }
+                if (y == 1) {
+                    x = (x == 0 ? 2 : 0);
+                    y = (int) Game.prevAI.getY();
+                    if (grid[y][x] == Cell.O) {
+                        y = (y == 0 ? 2 : 0);
+                    }
+                    return new Point(x, y);
+                }
+
+                // если человек ходит в угол
+                if (x == 0 || x == 2) {
+                    x = (x == 0 ? 2 : 0);
+                    y = (x == 0 ? 2 : 0);
+                    if (grid[y][x] == Cell.O) {
+                        x = (x == 0 ? 2 : 0);
+                    }
+                }
+                return new Point(x, y);
             }
 
-            if (tactic == 1) {
+            if (tactic == 1) { // если первый шаг игрока был в центр
 
             }
 
-            if (tactic == 2) {
+            if (tactic == 2) { // если первый шаг игрока был в угол
 
             }
 
-            if (tactic == 3) {
+            if (tactic == 3) { // если первый шаг игрока был в бок
 
             }
 
@@ -90,19 +116,15 @@ public class PlayerAI extends Player {
         if (Game.numOfSteps == 5 || Game.numOfSteps == 6) {
 
             if (tactic == 0) {
-                x = (int) Game.prevStep.getX();
-                y = (int) Game.prevStep.getY();
-
-                if (x == 0 || x == 2) {
+                // если в прошлый раз человек сходил в центр, то больше ничего прописывать не нужно
+                // если человек сходил в бок или угол, то...
+                x = (int) Game.prevAI.getX();
+                y = (int) Game.prevAI.getY();
+                if (Game.prevHuman.getX() == x) {
                     x = (x == 0 ? 2 : 0);
-                    y = (x == 0 ? 2 : 0);
                 }
-                if (x == 1){
+                else {
                     y = (y == 0 ? 2 : 0);
-                    for (int i = 0; i < 3; i+=2) {
-                        if (grid[y][i] == Cell.EMPTY)
-                            x = i;
-                    }
                 }
                 return new Point(x, y);
             }

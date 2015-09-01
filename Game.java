@@ -73,6 +73,17 @@ public class Game implements Runnable {
                             JOptionPane.QUESTION_MESSAGE, null, new String[]{"Restart", "Exit"}, "Restart");
                     if (que == 1 || que == -1) System.exit(1);
                     if (que == 0) {
+                        switch (winner) {
+                            case "Crosses":
+                                Main.CROSSES_WINS++;
+                                break;
+                            case "Noughts":
+                                Main.NOUGHTS_WINS++;
+                                break;
+                            case "Nobody":
+                                Main.NO_ONE_WINS++;
+                                break;
+                        }
                         gui.dispose();
                         System.gc();
                         Game.startGame();

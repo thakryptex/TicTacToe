@@ -48,7 +48,7 @@ public class GUI extends JFrame {
             }
         });
 
-        setSize(new Dimension(327, 350));
+        setSize(477, 350);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -64,7 +64,6 @@ public class GUI extends JFrame {
 
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    g.setColor(Color.black);
                     g.drawRect((j * 100)+10, (i * 100)+10, 100, 100);
                     switch (game.getCellState(j, i)) {
                         case X:
@@ -77,6 +76,13 @@ public class GUI extends JFrame {
                     }
                 }
             }
+
+            Font font = new Font("my", Font.PLAIN, 20);
+            g.setFont(font);
+            g.drawString("Crosses:  " + Main.CROSSES_WINS, 334, 30);
+            g.drawString("Noughts:  " + Main.NOUGHTS_WINS, 336, 70);
+            g.drawString("No one:  " + Main.NO_ONE_WINS, 345, 110);
+
         }
     }
 }

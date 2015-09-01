@@ -91,6 +91,9 @@ public class PlayerAI extends Player {
                 if (x == 0 || x == 2) {
                     x = (x == 0 ? 2 : 0);
                     y = (y == 0 ? 2 : 0);
+                    if (grid[y][x] == Cell.O) {
+                        y = (y == 0 ? 2 : 0);
+                    }
                 }
                 return new Point(x, y);
             }

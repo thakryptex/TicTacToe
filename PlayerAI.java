@@ -99,16 +99,37 @@ public class PlayerAI extends Player {
                 return new Point(x, y);
             }
 
-            if (tactic == 1) { // если первый шаг игрока был в центр
-
+            if (tactic == 1) { // если первый ход игрока был в центр
+                x = (x == 0 ? 2 : 0);
+                y = (y == 0 ? 2 : 0);
+                int i = (int) Game.prevAI.getY();
+                int j = (int) Game.prevAI.getX();
+                // если игрок ходит в угол противоположный нашему прошлому шагу
+                if (x == j && y == i) {
+                    j = (j == 0 ? 2 : 0);
+                    return new Point(j, i);
+                }
             }
 
-            if (tactic == 2) { // если первый шаг игрока был в угол
-
+            if (tactic == 2) { // если первый ход игрока был в угол
+                if (x == 1 && y == 1) {
+                    int i = (int) Game.prevAI.getY();
+                    int j = (int) Game.prevAI.getX();
+                    j = (j == 0 ? 2 : 0);
+                    return new Point(j, i);
+                }
             }
 
-            if (tactic == 3) { // если первый шаг игрока был в бок
-
+            if (tactic == 3) { // если первый ход игрока был в бок
+                // если второй ход игрока был в соседнюю боковушку относительно первого хода
+                if ((x == 1 && y == 0) || (x == 1 && y == 2)) {
+                    if (grid[1][0] == Cell.X) return new Point(0, y);
+                    if (grid[1][2] == Cell.X) return new Point(2, y);
+                }
+                if ((x == 0 && y == 1) || (x == 2 && y == 1)) {
+                    if (grid[0][1] == Cell.X) return new Point(x, 0);
+                    if (grid[2][1] == Cell.X) return new Point(x, 2);
+                }
             }
 
         }
@@ -129,8 +150,15 @@ public class PlayerAI extends Player {
                 return new Point(x, y);
             }
 
-        }
+            //tactic = 1 - следующие шаги прописывать уже не нужно
 
+            //tactic = 2 - следующие шаги прописывать вроде тоже  не нужно
+
+            if (tactic == 3) { // если первый шаг игрока был в бок
+
+            }
+
+        }
         return null;
     }
 
@@ -250,34 +278,25 @@ public class PlayerAI extends Player {
 
     private Point firstMove() {
         Point point = new Point();
+        int x, y;
 
         // Если компьютер ходит первым, то ставит в один из углов (но тактика = 0)
         // Если игрок поставил крест в центр, то также в угол (но тактика = 1)
         if (grid[1][1] == Cell.X || Game.numOfSteps % 2 == 1) {
-            int x = random.nextInt(2)*2;
-            int y = random.nextInt(2)*2;
-            point.x = x;
-            point.y = y;
+            x = random.nextInt(2)*2;
+            y = random.nextInt(2)*2;
             tactic = Game.numOfSteps % 2 == 1 ? 0 : 1;
-            return point;
+            return new Point(x, y);
         }
 
         // Если игрок поставил крест в один из углов
         for (int i = 0; i < 3; i+=2) {
             for (int j = 0; j < 3; j+=2) {
                 if (grid[i][j] == Cell.X) {
-                    switch (random.nextInt(2)) {
-                        case 0:
-                            point.x = j;
-                            point.y = 1;
-                            break;
-                        case 1:
-                            point.x = 1;
-                            point.y = j;
-                            break;
-                    }
+                    x = (j == 0 ? 2 : 0);
+                    y = (i == 0 ? 2 : 0);
                     tactic = 2;
-                    return point;
+                    return new Point(x, y);
                 }
             }
         }
@@ -287,10 +306,8 @@ public class PlayerAI extends Player {
             for (int j = 0; j < 3; j++) {
                 if (i != j) {
                     if (grid[i][j] == Cell.X) {
-                        point.x = 1;
-                        point.y = 1;
                         tactic = 3;
-                        return point;
+                        return new Point(1, 1);
                     }
                 }
             }

@@ -153,10 +153,30 @@ public class PlayerAI extends Player {
                 // если человек сходил в бок или угол, то...
                 x = (int) Game.prevAI.getX();
                 y = (int) Game.prevAI.getY();
-                if (Game.prevHuman.getX() == x) {
-                    x = (x == 0 ? 2 : 0);
+                for (int i = 0; i < 3; i++) {
+                    if (grid[y][i] == Cell.X) {
+                        x = (x == 0 ? 2 : 0);
+                        y = (y == 0 ? 2 : 0);
+                        if (x == Game.prevHuman.getX()) {
+                            x = (x == 0 ? 2 : 0);
+                            if (x == Game.prevHuman.getX()) {
+                                x = (x == 0 ? 2 : 0);
+                            }
+                            return new Point(x, y);
+                        }
+                        if (y == Game.prevHuman.getY()) {
+                            y = (y == 0 ? 2 : 0);
+                            if (y == Game.prevHuman.getY()) {
+                                y = (y == 0 ? 2 : 0);
+                            }
+                            return new Point(x, y);
+                        }
+                        return new Point(x, y);
+                    }
                 }
-                else {
+                y = (y == 0 ? 2 : 0);
+                if (grid[y][x] == Cell.X || grid[y][x] == Cell.O) {
+                    x = (x == 0 ? 2 : 0);
                     y = (y == 0 ? 2 : 0);
                 }
                 return new Point(x, y);
